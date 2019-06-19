@@ -1,0 +1,71 @@
+#game-container {
+	display: flex;
+	flex-direction: row;
+	width: 600px;
+	
+	color: #bbb;
+	font-family: "sans-serif";
+}
+
+#game-container p {
+	margin: 0;
+}
+
+#hold-container {
+	padding: 1em;
+	border: 1px solid #ccc;
+	width: 150px;
+	height: 150px;
+}
+
+#upcoming-container {
+	padding: 1em;
+	margin-top: 1em;
+	border: 1px solid #ccc;
+}
+
+#main-container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+
+	--cell-border: #ddd;
+}
+
+.tetris-row {
+	display: flex;
+	justify-content: center;
+}
+
+.tetris-row:first-child .tetris-cell {
+	border-top: 1px solid var(--cell-border);
+}
+
+.tetris-row:nth-child(4) .tetris-cell {
+	border-bottom: 2px solid #cc241d;
+}
+
+.tetris-row:nth-child(-n+4) .tetris-cell {
+	background-color: #eee;
+}
+
+.tetris-cell {
+	width: 2em;
+	height: 2em;
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	border-color: var(--cell-border);
+	background-color: #f9f9f9;
+}
+
+.tetris-cell[color="1"] { background-color: #fb4934!important; }
+.tetris-cell[color="2"] { background-color: #b8bb26!important; }
+.tetris-cell[color="3"] { background-color: #fabd2f!important; }
+.tetris-cell[color="4"] { background-color: #d3869b!important; }
+.tetris-cell[color="5"] { background-color: #83a598!important; }
+.tetris-cell[color="6"] { background-color: #8ec07c!important; }
+.tetris-cell[color="7"] { background-color: #fe8019!important; }
+
+.tetris-cell:first-child {
+	border-left: 1px solid var(--cell-border);
+}
