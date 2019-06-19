@@ -1,0 +1,107 @@
+#game-container {
+	display: flex;
+	flex-direction: row;
+	width: 600px;
+	color: #bbb;
+	font-family: "sans-serif";
+	--cell-border: #ddd;
+}
+
+#next-container,
+#hold-container {
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+
+	position: relative;
+	padding: 1em;
+	border: 1px solid #ccc;
+	width: 150px;
+	height: 150px;
+}
+
+#next-container {
+	margin-top: 1em;
+}
+
+#hold-container::after,
+#next-container::after {
+	display: block;
+	position: absolute;
+	top: -0.5em;
+	line-height: 1em;
+	background-color: white;
+	padding: 0 0.5em;
+	letter-spacing: 0.2em;
+}
+
+#hold-container::after {
+	content: "HOLD";
+}
+
+#next-container::after {
+	content: "NEXT";
+}
+
+#info-container {
+	padding: 1em;
+}
+
+#main-container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+#score-span,
+#speed-span,
+#lines-span,
+#level-span {
+	color: #999;
+	font-weight: 900;
+}
+
+.tetris-row {
+	display: flex;
+	justify-content: center;
+}
+
+.tetris-row:first-child .tetris-cell {
+	border-top: 1px solid var(--cell-border);
+}
+
+#main-container .tetris-row:nth-child(4) .tetris-cell {
+	border-bottom: 2px solid #cc241d;
+}
+
+#main-container .tetris-row:nth-child(-n+4) .tetris-cell {
+	background-color: #eee;
+}
+
+.tetris-cell {
+	width: 2em;
+	height: 2em;
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	border-color: var(--cell-border);
+	background-color: #f9f9f9;
+}
+
+.tetris-cell[color="1"] { background-color: #8ec07c!important; }
+.tetris-cell[color="2"] { background-color: #fabd2f!important; }
+.tetris-cell[color="3"] { background-color: #d3869b!important; }
+.tetris-cell[color="4"] { background-color: #b8bb26!important; }
+.tetris-cell[color="5"] { background-color: #fb4934!important; }
+.tetris-cell[color="6"] { background-color: #83a598!important; }
+.tetris-cell[color="7"] { background-color: #fe8019!important; }
+.tetris-cell[outline="1"] { box-shadow: inset 0 0 0.2em #8ec07c!important; }
+.tetris-cell[outline="2"] { box-shadow: inset 0 0 0.2em #fabd2f!important; }
+.tetris-cell[outline="3"] { box-shadow: inset 0 0 0.2em #d3869b!important; }
+.tetris-cell[outline="4"] { box-shadow: inset 0 0 0.2em #b8bb26!important; }
+.tetris-cell[outline="5"] { box-shadow: inset 0 0 0.2em #fb4934!important; }
+.tetris-cell[outline="6"] { box-shadow: inset 0 0 0.2em #83a598!important; }
+.tetris-cell[outline="7"] { box-shadow: inset 0 0 0.2em #fe8019!important; }
+
+.tetris-cell:first-child {
+	border-left: 1px solid var(--cell-border);
+}
