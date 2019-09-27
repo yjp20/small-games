@@ -1,4 +1,4 @@
-/*
+/* vim: set fdm=syntax:
  * Author: Young Jin Park <youngjinpark20@gmail.com>
  *
  * Compared to Minimal:
@@ -275,8 +275,9 @@ function init() {
 		if (e.code === "ArrowDown") moveBlock(0, 1, 0, 1)
 
 		// rotation
-		if (e.code === "KeyZ") moveBlock(0, 0, -1) || moveBlock(1, 0, -1) || moveBlock(-1, 0, -1)
-		if (e.code === "KeyX" || e.code === "ArrowUp") moveBlock(0, 0, 1) || moveBlock(1, 0, 1) || moveBlock(-1, 0, 1)
+		// this rotation system is a discount SRS since I wanted it to be relatively simple.
+		if (e.code === "KeyZ")                         moveBlock(0,0,-1)||moveBlock(1,0,-1)||moveBlock(-1,0,-1)||moveBlock(0,-1,-1)||moveBlock(0,-2,-1)
+		if (e.code === "KeyX" || e.code === "ArrowUp") moveBlock(0,0,1) ||moveBlock(1,0,1) ||moveBlock(-1,0,1) ||moveBlock(0,-1,1) ||moveBlock(0,-2,1)
 
 		// special
 		if (e.code === "Space") hardDrop()
@@ -347,8 +348,8 @@ function gameTick() {
 		state.orient = 0
 		state.current = state.next
 		generateRandomNext()
-		queueTick()
 		draw()
+		queueTick()
 	}
 	else {moveBlock(0, 1, 0)}
 }
@@ -367,17 +368,18 @@ function hardDrop() {
 	var k = getYShiftUntilCollision()
 	moveBlock(0, k, 0, 2*k)
 	moveBlock(0, 1, 0)
-	gameTick()
 }
 
-// returns 'true' if successful
 function moveBlock(shiftx, shifty, orientshift, points) {
+	// returns 'true' if successful
 	if (state.current == null) return
 
 	var result = detectCollision(shiftx, shifty, orientshift)
 
-	if (result == 0 && shifty || result == 1 && shifty) queueTick()
+	// Move i
+	if (result == 0 && shifty > 0 || result == 1 && shifty > 0) queueTick()
 
+	// Successful change in orientation or move sideways
 	if (result == 0) {
 		state.posY += shifty
 		state.posX += shiftx
@@ -420,26 +422,34 @@ function moveBlock(shiftx, shifty, orientshift, points) {
 }
 
 function detectCollision(shiftx, shifty, orientshift) {
+	// Returns 0 if the move is sucessful.
+	// Returns 1 if the move collides due to a vertical shift and should be set.
+	// Returns 2 if the move is invalid due to moving out of bounds or colliding with another block.
+
 	if (state.current == null) return
-
 	var tmporient = (orientshift + state.orient + state.current.length) % state.current.length
-
 	for (var i=0; i<4; i++) {
 		for (var j=0; j<4; j++) {
 			var xx = j+state.posX+shiftx
 			var yy = i+state.posY+shifty
 
+			// Case where the tetrimino collides with another block
 			if (yy < 24) {
 				if (state.current[tmporient][i][j] && state.rows[yy][xx]) {
 					if (shifty) return 1
 					else return 2
 				}
 			}
+
+			// Case where the tetrimino would be below the playing space
 			if (24 <= yy) {
 				if (state.current[tmporient][i][j]) {
-					return 1
+					if (shifty) return 1
+					else return 2
 				}
 			}
+
+			// Cases where the tetrimino would be horizontally outside the playing area
 			if (xx < 0 && state.current[tmporient][i][j]) return 2
 			if (COL-1 < xx && state.current[tmporient][i][j]) return 2
 		}
