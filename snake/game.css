@@ -1,0 +1,27 @@
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	height: 100vh;
+}
+
+#game-container {
+	color: #bbb;
+	font-family: "sans-serif";
+}
+
+.grid {
+	display: inline-block;
+	height: 8px;
+	width: 8px;
+	background-color: #eee;
+}
+
+.grid[block] {
+	background-color: black;
+}
+
+.grid[block=food] {
+	background-color: red;
+}
